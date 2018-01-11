@@ -8,4 +8,4 @@ projet arduino time control glove
 ## Présentation du projet
 L'objectif de ce projet est de réaliser une paire de gants capable de "contrôler" le temps grâce à l'effet stroboscopique.
 
-[![time control glove](https://img.youtube.com/vi/rj9L1_-AzMc&t/0.jpg)](https://www.youtube.com/watch?v=rj9L1_-AzMc&t)
+![Alt Text](https://i.makeagif.com/media/1-11-2018/cPzc6O.gif)
