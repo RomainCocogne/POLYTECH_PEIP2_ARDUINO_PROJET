@@ -19,3 +19,8 @@ L'objectif de ce projet est de réaliser une paire de gants capable de "contrôl
 voici un exemple de rendu:
 
 ![time control glove](https://i.makeagif.com/media/1-11-2018/cPzc6O.gif)
+
+Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des flashs lumineux et l'autre se chargera du contrôle.
+
+## Liste du matériel
+
