@@ -8,7 +8,7 @@ Ce projet est réalisé dans le cadre de la formation de prépa intégrée de Po
 # POLYTECH_PEIP2_ARDUINO_PROJET
 projet arduino time control glove 
 
-![dr strange apple](https://i.makeagif.com/media/3-14-2017/wE9W5J.gif =300x50)
+![dr strange apple](https://i.makeagif.com/media/3-14-2017/wE9W5J.gif)
 
 
 
