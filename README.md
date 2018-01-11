@@ -9,7 +9,7 @@ Ce projet est réalisé dans le cadre de la formation de prépa intégrée de Po
 projet arduino time control glove 
 
 <img src="https://i.makeagif.com/media/3-14-2017/wE9W5J.gif" width="600" height="300">
-
+<!--https://i.makeagif.com/media/1-31-2017/7Gys2-.gif pour une meilleur qualité mais qui marche pas avec l'HTML-->
 
 
 ## Présentation du projet
