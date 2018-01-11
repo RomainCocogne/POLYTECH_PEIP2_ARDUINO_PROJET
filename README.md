@@ -6,8 +6,4 @@ Ce projet est réalisé dans le cadre de la formation de prépa intégrée de Po
 projet arduino time control glove 
 
 
-<div align="center">
-    <iframe width="620" height="315"
-        src="https://www.youtube.com/embed/OhlVBpEnjig">
-    </iframe>
-</div>
+[![time control glove](https://img.youtube.com/vi/rj9L1_-AzMc&t/0.jpg)](https://www.youtube.com/watch?v=rj9L1_-AzMc&t)
