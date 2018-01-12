@@ -1,3 +1,5 @@
+#Cahier de suivi du projet de Quentin Combal
+
 * Séance du 22 Décembre 2017 
 
 Formation du groupe avec Romain Cocogne. Nous avions déjà prévu de faire un sujet mettant en scéne *l'effet stroboscopique*
