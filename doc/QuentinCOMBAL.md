@@ -1,6 +1,6 @@
-#Cahier de suivi du projet de Quentin Combal
+# Cahier de suivi du projet de Quentin Combal
 
-* Séance du 22 Décembre 2017 
+### * Séance du 22 Décembre 2017 
 
 Formation du groupe avec Romain Cocogne. Nous avions déjà prévu de faire un sujet mettant en scéne *l'effet stroboscopique*
 
@@ -11,7 +11,7 @@ L'effet stroboscopique est une illusion d'optique qui donne l'impression de rale
 Aprés quelques recherches, nous nous sommes mis d'accord pour utiliser cet effet en le controllant à l'aide de deux gants.
 
 
-* Séance du 12 Décembre 2017
+### * Séance du 12 Décembre 2017
 
 
 
