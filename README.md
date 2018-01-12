@@ -30,7 +30,7 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 * Gant
 * Pâte thermique 
 * Lentilles optiques, voir les caractéristiques sur la page instructables. Angle de diffusion 60°   Intensité lumineuse en lumens ? 
-	- Plaque en metal (bon conducteur thermique : cuivre)
+* Plaque en metal (bon conducteur thermique : cuivre)
 	
 ### Electronique : 
 
