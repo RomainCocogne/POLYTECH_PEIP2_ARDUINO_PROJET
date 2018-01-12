@@ -1,6 +1,7 @@
 
 
 
+
 ![Polytech](http://www.polytechnice.fr/jahia/jsp/jahia/templates/inc/img/polytech_nice-sophia.png)
 
 Ce projet est réalisé dans le cadre de la formation de prépa intégrée de Polytech'Nice Sophia
@@ -56,3 +57,4 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 
 * moteur continu ou pas à pas
 * objet ludique
+* Horloge
