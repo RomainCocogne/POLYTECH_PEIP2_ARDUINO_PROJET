@@ -36,7 +36,7 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 ### Electronique : 
 
 * (Micro-controlleurs (à mettre sur un des deux gants)) 
-* Arduino (1 ou 2 ?) 
+* 2 Arduino (Nano/Mini Pro)
 * Accelerométre 
 * Potentiométre 
 * Resistances 100 et 10k
