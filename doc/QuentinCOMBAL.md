@@ -1,3 +1,4 @@
+
 # Cahier de suivi du projet de Quentin Combal
 
 * ### Séance du 22 Décembre 2017 
@@ -13,6 +14,5 @@ Aprés quelques recherches, nous nous sommes mis d'accord pour utiliser cet effe
 
 * ### Séance du 12 Décembre 2017
 
-
-
+Nous avons etabli une planification des taches sur un diagramme de Gantt. Nous avons egalement esquissé un schema de fonctionnement, et dréssé la liste des composants. 
 
