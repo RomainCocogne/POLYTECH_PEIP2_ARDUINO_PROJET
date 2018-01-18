@@ -32,19 +32,18 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 
 * Gant
 * Pâte thermique 
-* Lentilles optiques, voir les caractéristiques sur la page instructables. Angle de diffusion 60°   Intensité lumineuse en lumens ? 
+* Lentilles optiques, voir les caractéristiques sur la page instructables. Angle de diffusion 60°   Intensité lumineuse en lumens 
 * Plaque en metal (bon conducteur thermique : cuivre)
 	
 ### Electronique : 
 
-* (Micro-controlleurs (à mettre sur un des deux gants)) 
 * 2 Arduino (Nano/Mini Pro)
 * Accelerométre 
 * Potentiométre 
 * Resistances 100 et 10k
-* MOSFET (doit supporter 3A)
-* lex Sensors 
-* LED blanche 100W (Alimenté par ~34V --> ~3A )
+* MOSFET 
+* Flex Sensors 
+* LED blanche 100W
 	
 ### Alimentation : 
 
