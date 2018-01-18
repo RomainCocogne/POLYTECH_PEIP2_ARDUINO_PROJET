@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2017-12-25" view-index="0" gantt-divider-location="370" resource-divider-location="300" version="2.8.5" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2018-01-01" view-index="0" gantt-divider-location="424" resource-divider-location="300" version="2.8.5" locale="fr">
     <description/>
     <view zooming-state="default:6" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="268" order="0"/>
-        <field id="tpd4" name="Date de début" width="15" order="1"/>
-        <field id="tpd5" name="Date de fin" width="83" order="2"/>
+        <field id="tpd3" name="Nom" width="245" order="0"/>
+        <field id="tpd4" name="Date de début" width="82" order="1"/>
+        <field id="tpd5" name="Date de fin" width="93" order="2"/>
         <timeline><![CDATA[0]]></timeline>
-        <option id="color.recent"><![CDATA[#999999 #ffcc33 #9999ff #ccccff #666666 #cc3300 #66ff66]]></option>
+        <option id="color.recent"><![CDATA[#666666 #999999 #ffcc33 #9999ff #ccccff #cc3300 #66ff66]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Nom" width="210" order="0"/>
@@ -35,18 +35,14 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Definir le projet" color="#8cb6ce" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="false" start="2018-01-02" duration="14" complete="0" expand="true">
-            <depend id="4" type="2" difference="0" hardness="Strong"/>
-        </task>
-        <task id="4" name="Presentation 1" color="#8cb6ce" meeting="false" start="2018-01-22" duration="8" complete="0" expand="true">
+        <task id="0" name="Definir le projet" color="#8cb6ce" shape="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" meeting="false" start="2018-01-02" duration="14" complete="0" expand="true"/>
+        <task id="4" name="Presentation 1" color="#8cb6ce" meeting="false" start="2018-01-15" duration="7" complete="0" expand="true">
             <notes><![CDATA[Intro avec Docteur Strange 
 
 Problématique : Comment avoir des super-pouvoirs ? 
 
 Spécifier la methode de communication utilisée]]></notes>
         </task>
-        <task id="7" name="Etudier l'effet stroboscopique" color="#999999" meeting="false" start="2018-01-31" duration="32" complete="0" expand="true"/>
-        <task id="30" name="Experimenter l'effet stroboscopique" color="#999999" meeting="false" start="2018-02-15" duration="21" complete="0" expand="true"/>
         <task id="9" name="Dresser la liste des composants" color="#ffcc33" meeting="false" start="2018-01-12" duration="11" complete="0" expand="true">
             <depend id="11" type="2" difference="0" hardness="Strong"/>
         </task>
@@ -54,7 +50,9 @@ Spécifier la methode de communication utilisée]]></notes>
             <depend id="11" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="11" name="Commander les composants" color="#ffcc33" meeting="false" start="2018-01-29" duration="25" complete="0" expand="true"/>
-        <task id="28" name="Presentation 2" color="#9999ff" meeting="false" start="2018-02-28" duration="23" complete="0" expand="true"/>
+        <task id="7" name="Etudier l'effet stroboscopique" color="#666666" meeting="false" start="2018-01-29" duration="34" complete="0" expand="true"/>
+        <task id="30" name="Experimenter l'effet stroboscopique" color="#666666" meeting="false" start="2018-02-15" duration="21" complete="0" expand="true"/>
+        <task id="28" name="Premiers essais" color="#666666" meeting="false" start="2018-02-15" duration="32" complete="0" expand="true"/>
         <task id="29" name="Présentation finale" color="#9999ff" meeting="false" start="2018-04-30" duration="24" complete="0" expand="true"/>
     </tasks>
     <resources/>
