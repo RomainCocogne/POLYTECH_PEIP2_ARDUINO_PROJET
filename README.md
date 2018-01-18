@@ -33,7 +33,7 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 * Gant
 * Pâte thermique 
 * Lentilles optiques, voir les caractéristiques sur la page instructables. Angle de diffusion 60°   Intensité lumineuse en lumens 
-* Plaque en metal (bon conducteur thermique : cuivre)
+* Plaque de cuivre
 	
 ### Electronique : 
 
@@ -47,9 +47,9 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 	
 ### Alimentation : 
 
-* Batterie lithium 11,1V - 12V   1500 mAh (plus de préference)
-* 2éme (batterie moins puissante)
-* Convertisseur Boost DCDC   12V compris dans l'input, 34V compris dans l'output
+* Batterie lipo 11,1V - 12V   +3A 1500 mAh   **OK**
+* 2éme (batterie moins puissante)  
+* Convertisseur Boost DCDC   (12V compris dans l'input, 34V compris dans l'output)
 	
 ### Transfert de données : Bluetooth ?  
 
