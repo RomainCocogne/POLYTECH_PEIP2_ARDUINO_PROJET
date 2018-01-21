@@ -51,7 +51,7 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 * 2éme (batterie moins puissante)  
 * Convertisseur Boost DCDC   (12V compris dans l'input, 34V compris dans l'output)
 	
-### Transfert de données : Bluetooth ?  
+### Transfert de données : Bluetooth   
 
 ### Objet en rotation
 
