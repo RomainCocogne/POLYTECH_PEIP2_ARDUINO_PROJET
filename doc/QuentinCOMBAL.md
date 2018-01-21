@@ -12,7 +12,10 @@ L'effet stroboscopique est une illusion d'optique qui donne l'impression de rale
 Aprés quelques recherches, nous nous sommes mis d'accord pour utiliser cet effet en le controllant à l'aide de deux gants.
 
 
-* ### Séance du 12 Décembre 2017
+* ### Séance du 12 Janvier 2018
 
 Nous avons etabli une planification des taches sur un diagramme de Gantt. Nous avons egalement esquissé un schema de fonctionnement, et dréssé la liste des composants. 
 
+* ### Séance du 18 Janvier 2018
+Nous avons préparé la presentation orale de fin Janvier, envoyé une liste d'achat de composants à M.Masson, et réalisé un schema visuel de notre montage électronique avec le logiciel Fritzing. 
+Nous avons également trouvé, dans les stocks de la salle elec, une batterie adéquate pour l'alimentation du premier gant.    
