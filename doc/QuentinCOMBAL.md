@@ -19,4 +19,4 @@ Nous avons préparé la presentation orale de fin Janvier, envoyé une liste d'a
 Nous avons également trouvé, dans les stocks de la salle elec, une batterie adéquate pour l'alimentation du premier gant.    
 
 * ### Séance du 18 Janvier 2018
-Nous avons présenté notre projet au groupe 
+Nous avons présenté notre projet au groupe. 
