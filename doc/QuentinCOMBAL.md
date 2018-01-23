@@ -1,4 +1,4 @@
-
+23
 # Cahier de suivi du projet de Quentin Combal
 
 * ### Séance du 22 Décembre 2017 
@@ -18,5 +18,5 @@ Nous avons etabli une planification des taches sur un diagramme de Gantt. Nous a
 Nous avons préparé la presentation orale de fin Janvier, envoyé une liste d'achat de composants à M.Masson, et réalisé un schema visuel de notre montage électronique avec le logiciel Fritzing. 
 Nous avons également trouvé, dans les stocks de la salle elec, une batterie adéquate pour l'alimentation du premier gant.    
 
-* ### Séance du 18 Janvier 2018
+* ### Séance du 23 Janvier 2018
 Nous avons présenté notre projet au groupe. 
