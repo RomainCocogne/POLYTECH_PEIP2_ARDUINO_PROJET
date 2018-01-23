@@ -3,9 +3,7 @@
 
 * ### Séance du 22 Décembre 2017 
 
-Formation du groupe avec Romain Cocogne. Nous avions déjà prévu de faire un sujet mettant en scéne *l'effet stroboscopique*
-
-[La page wikipedia sur l'effet stroboscopique](https://fr.wikipedia.org/wiki/Effet_stroboscopique)
+Formation du groupe avec Romain Cocogne. Nous avions déjà prévu de faire un sujet mettant en scéne [*l'effet stroboscopique*](https://fr.wikipedia.org/wiki/Effet_stroboscopique)
 
 L'effet stroboscopique est une illusion d'optique qui donne l'impression de ralentir, voire arreter complétement un objet en mouvement.
 
@@ -19,3 +17,6 @@ Nous avons etabli une planification des taches sur un diagramme de Gantt. Nous a
 * ### Séance du 18 Janvier 2018
 Nous avons préparé la presentation orale de fin Janvier, envoyé une liste d'achat de composants à M.Masson, et réalisé un schema visuel de notre montage électronique avec le logiciel Fritzing. 
 Nous avons également trouvé, dans les stocks de la salle elec, une batterie adéquate pour l'alimentation du premier gant.    
+
+* ### Séance du 18 Janvier 2018
+Nous avons présenté notre projet au groupe 
