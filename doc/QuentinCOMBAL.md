@@ -1,3 +1,4 @@
+
 23
 # Cahier de suivi du projet de Quentin Combal
 
@@ -25,3 +26,4 @@ Nous avons présenté notre projet au groupe.
 * ### Séance du 7 Février 2018
 Reçu les composants
 Tests avec la LED : tension d'alimentation, luminosité, frequence de presistence retinienne
+Test des valeurs de resistance du flex sensor
