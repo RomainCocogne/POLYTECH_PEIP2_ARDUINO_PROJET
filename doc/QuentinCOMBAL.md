@@ -20,3 +20,8 @@ Nous avons également trouvé, dans les stocks de la salle elec, une batterie ad
 
 * ### Séance du 23 Janvier 2018
 Nous avons présenté notre projet au groupe. 
+
+
+* ### Séance du 7 Février 2018
+Reçu les composants
+Tests avec la LED : tension d'alimentation, luminosité, frequence de presistence retinienne
