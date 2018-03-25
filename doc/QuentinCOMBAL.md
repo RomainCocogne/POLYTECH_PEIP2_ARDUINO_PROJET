@@ -27,3 +27,8 @@ Nous avons présenté notre projet au groupe.
 Reçu les composants
 Tests avec la LED : tension d'alimentation, luminosité, frequence de presistence retinienne
 Test des valeurs de resistance du flex sensor
+
+
+* ### Séance du 16 Mars 2018
+Nous avons fait des tests avec l'accelerométre numérique et les modules bluetooth, ainsi qu'avec le montage Arduino + DCDC Converter + LED.
+Nous avons également mis à jour notre diagramme de Gantt
