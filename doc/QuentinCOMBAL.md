@@ -25,10 +25,13 @@ Nous avons présenté notre projet au groupe.
 
 * ### Séance du 7 Février 2018
 Reçu les composants
-Tests avec la LED : tension d'alimentation, luminosité, frequence de presistence retinienne
+Tests avec la LED : tension d'alimentation, luminosité, frequence de presistence retinienne.
 Test des valeurs de resistance du flex sensor
+
+* ### Entre le 7 Févrirer et le 16 Mars 2018
+Mise en place du montage Arduino + DCDC Converter + LED. Tests avec ce montage pour determiner la bande de fréquences atteignable avec la LED.  
 
 
 * ### Séance du 16 Mars 2018
-Nous avons fait des tests avec l'accelerométre numérique et les modules bluetooth, ainsi qu'avec le montage Arduino + DCDC Converter + LED.
-Nous avons également mis à jour notre diagramme de Gantt
+Nous avons fait des tests avec l'accelerométre numérique et les modules bluetooth.
+Nous avons également mis à jour notre diagramme de Gantt.
