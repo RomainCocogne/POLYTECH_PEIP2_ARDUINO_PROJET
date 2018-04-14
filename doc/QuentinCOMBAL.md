@@ -1,5 +1,3 @@
-
-23
 # Cahier de suivi du projet de Quentin Combal
 
 * ### Séance du 22 Décembre 2017 
