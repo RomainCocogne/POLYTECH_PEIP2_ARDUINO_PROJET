@@ -35,3 +35,12 @@ Mise en place du montage Arduino + DCDC Converter + LED. Tests avec ce montage p
 * ### Séance du 16 Mars 2018
 Nous avons fait des tests avec l'accelerométre numérique et les modules bluetooth.
 Nous avons également mis à jour notre diagramme de Gantt.
+
+* ### Séance du 29 Mars 2018
+Nous avons presenté notre avancement dans une presentation de mi-parcours. Nous avons egalement continué nos tests avec le bluetooth et l'accelerométre.
+
+* ### Séance du 5 Avril 2018
+Tests avec les flex sensors et les modules bluetooth. Finition du code pour l'accelerométre.
+
+* ### Séance du 9 Avril 2018
+Peaufinage du code comprenenant l'accelerométre, les flex sensors, et la LED. Debut d'un prototype avec le montage sur pcb du circuit de droite. Deuxiéme commande de composants.  
