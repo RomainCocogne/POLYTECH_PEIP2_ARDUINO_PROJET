@@ -1,11 +1,19 @@
+/*
+ * programme sur le gant droit
+ * 
+ * utilise l accelerometre et les flex sensors pour determiner la frequence de clignotement
+ * et l envoie par bluetooth
+ */
+
+
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
-#define PIN            6 
-#define NUMPIXELS      30
+#define PIN            5 
+#define NUMPIXELS      18
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 #include <SoftwareSerial.h>
-SoftwareSerial BTSerial(10, 11);
+SoftwareSerial BTSerial(11, 10);
 
 #include <Wire.h>  // Library qui sert à comminuquer avec le I²C de l'accelerométre 
 #include "Kalman.h" //Classe Kalman qui permet de d'utiliser le filtre de Kalman
@@ -16,6 +24,7 @@ int vitesse_chenille = 20; int vitesse_blink = 50;
 unsigned long timer_led = 0; // sauvegarde la derniere valeur de millis() pour faire le delay
 bool aller=true; //blink aller/retour
 int i=0;  //position de la chenille de led dans la matrice de neopixels
+int couleur[]={1,20,1}; //pour du vert
 //********************************//
 
 
@@ -44,7 +53,6 @@ uint32_t timer_acc; /* Entier sur 32 bits non signé --> Valeur entre 0 et 2^32 
 //*********variables flex sensor**************//
 int flex_0; //Données des flex sensors
 int flex_1;
-int flex_2;
 //*******************************************//
 
 //*********variables de delay**********//
@@ -101,6 +109,8 @@ void setup() {
 
 void loop() {
 
+  //Serial.println(kalAngleZ);
+
   //******************bluetooth+led**********************//
   
   char receive;         //sauvegarde le char reçus
@@ -109,20 +119,20 @@ void loop() {
     if(receive !='$')
       Serial.write(receive); //ecrit le char 
   }
-  unsigned long currentMillis = millis();
-  if (currentMillis - timer_send_donnee >= time_send_data) {
-      timer_send_donnee = currentMillis;
-    BTSerial.write('&'+t_micro+t_macro+'\n');
-  }
   test_connection("send",'$',' '); //test si on est connecté
   test_connection("receive",'$',receive); //test si on est connecté
   
   if(!is_connected){ //si on est pas connecté
     try_connection(); //on essaye
-    low_blink(); //on allume tout
+    chenillard(); //petit chenillard
   }
   else{  //sinon
-    chenillard(); //petit chenillard
+    unsigned long currentMillis = millis();
+    if (currentMillis - timer_send_donnee >= time_send_data) {
+        timer_send_donnee = currentMillis;
+        BTSerial.write('&'+t_micro+t_macro+'\n');
+    }
+    low_blink(); //on allume tout
   }
 
 
@@ -141,18 +151,19 @@ void loop() {
    /* Recupére les données des flex sensors */
     flex_0 = analogRead(0);
     flex_1 = analogRead(1);
-    flex_2 = analogRead(2);
   
-    /*Si au moins deux des trois flex sensors sont pliés --> Reglage macro*/ 
-    if ((flex_0 >900 && flex_1>1000) || (flex_1 >1000 && flex_2>900) || (flex_0 >900 && flex_2>900)){  /*La barre du flex_1 est plus haute que les autres car c'est celui qui est un peu plié par defaut */ 
+    /*Si au moins un des deux flex sensors sont pliés --> Reglage macro*/ 
+    if ((flex_0 >900) || (flex_1 >1000)){  /*La barre du flex_1 est plus haute que l'autre car c'est celui qui est un peu plié par defaut */ 
       t_macro = map(kalAngleZ,-120,120,t_macro_min,t_macro_max);
-      Serial.print("Mode : macro  ;  ");
+      //Serial.print("Mode : macro  ;  ");
+      couleur[0]=1; couleur[1]=1; couleur[2]=20;  
     }
     
     /* Sinon --> Reglage micro */
     else {
       t_micro = map(kalAngleZ,-120,120,t_micro_min,t_micro_max);
-      Serial.print("Mode : micro  ;  ");      
+      //Serial.print("Mode : micro  ;  "); 
+      couleur[0]=1; couleur[1]=20; couleur[2]=1;     
       }
       
   
@@ -225,7 +236,7 @@ void test_connection(String mode, char test, char receive){
 
 void all_led_on(){
   for(int j=0; j<=NUMPIXELS; j++){
-    pixels.setPixelColor(j, pixels.Color(1,20,1));     
+    pixels.setPixelColor(j, pixels.Color(couleur[0],couleur[1],couleur[2]));     
   }
   pixels.show();
 }
@@ -239,7 +250,7 @@ void low_blink(){
   if(aller) i++;
   else i--;
   for(int j=0; j<=NUMPIXELS; j++){
-    pixels.setPixelColor(j, pixels.Color(i,20*i,i));     
+    pixels.setPixelColor(j, pixels.Color(couleur[0]*i,couleur[1]*i,couleur[2]*i));     
   }
   pixels.show();
   }
@@ -261,8 +272,8 @@ void chenille(int i,int taille){
   if(i-taille<0) pixels.setPixelColor(NUMPIXELS-taille+i, pixels.Color(0,0,0));
   pixels.setPixelColor(i-taille, pixels.Color(0,0,0)); 
   for(int j=i-taille+1; j<=i; j++){
-    if (j-taille<0) pixels.setPixelColor(NUMPIXELS+j, pixels.Color(1,20,1));
-    pixels.setPixelColor(j, pixels.Color(1,20,1));     
+    if (j-taille<0) pixels.setPixelColor(NUMPIXELS+j, pixels.Color(couleur[0],couleur[1],couleur[2]));
+    pixels.setPixelColor(j, pixels.Color(couleur[0],couleur[1],couleur[2]));     
   }
   pixels.setPixelColor(i+1, pixels.Color(0,0,0)); 
 }

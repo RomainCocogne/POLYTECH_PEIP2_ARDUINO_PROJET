@@ -14,8 +14,8 @@ const int dureeFlash = 200; // Durée du flash en µs
 const int led_pin = 2;      //pin de la led
 bool receiving_data=false;  //recoit ou non la frequence de clignotement
 //sauvegarde de millis()
-unsigned long timer_flash = 0; unsigned long timer_shut = 0; //pour envoyer et recevoir le test de connection
-bool allumee=true;
+unsigned long timer_flash = 0; unsigned long timer_shut = 0; //timer pour l allumage de la led
+bool allumee=true;          //si la led est allumee
 
 void setup() 
 {
@@ -53,16 +53,16 @@ void loop()
   }
 
   //**************LED**************//
-   unsigned long currentMillis = millis();
-  if (currentMillis - timer_flash >= dureeFlash && allumee) {
+   unsigned long currentMillis = micros();
+  if (currentMillis - timer_flash >= dureeFlash && allumee) {   //duree allumee
       timer_flash = currentMillis; timer_shut = currentMillis;
       allumee=false;
-      digitalWrite(led_pin, LOW);  
+      digitalWrite(led_pin, LOW);                               //eteindre
   }
-  else if (currentMillis - timer_shut >= dureeSombre && !allumee) {
+  else if (currentMillis - timer_shut >= dureeSombre && !allumee) { //duree eteinte
       timer_shut = currentMillis; timer_flash = currentMillis;
       allumee=true;
-      digitalWrite(led_pin, LOW);  
+      digitalWrite(led_pin, LOW);                               //allumer
   }
   Serial.print("Freq : ");Serial.print(1/((dureeSombre)*0.000001));Serial.println(" Hz");
 
