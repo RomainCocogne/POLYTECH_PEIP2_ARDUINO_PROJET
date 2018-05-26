@@ -64,7 +64,7 @@ void loop()
       allumee=true;
       digitalWrite(led_pin, LOW);                               //allumer
   }
-  Serial.print("Freq : ");Serial.print(1/((dureeSombre)*0.000001));Serial.println(" Hz");
+  //Serial.print("Freq : ");Serial.print(1/((dureeSombre)*0.000001));Serial.println(" Hz");
 
 }
 
