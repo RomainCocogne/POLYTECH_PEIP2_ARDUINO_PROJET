@@ -40,11 +40,11 @@ int16_t gyroZ;
 float accZangle;
 float gyroZrate;
 float gyroZangle = 180;
+uint8_t data[14]; //Stocke les 14 valeurs renvoyées par l'accéléromètre
 long lastchange;
 boolean actif;
 
 /* Variables pour le filtre de Kalman */
-Kalman kalmanX;
 Kalman kalmanZ;
 double kalAngleZ;
 uint32_t timer_acc; /* Entier sur 32 bits non signé --> Valeur entre 0 et 2^32 -1 */
@@ -72,9 +72,9 @@ bool is_send=false;
 int erreurs=0;
 //***********************************************//
 
-/*Valeurs pour le mapping (un peu au pif, j'avoue)*/
+/*Valeurs pour le mapping */
 const int t_macro_min = 2000;     // µs 
-const int t_macro_max = 10000;    // µs 
+const int t_macro_max = 15000;    // µs 
 const int t_micro_min = 0;
 const int t_micro_max = 500;   // µs
 /* Variables finales, celles à envoyer par bluetooth */
@@ -85,7 +85,8 @@ int t_micro = 0;   //µs
 
 void setup() {
   /*de base*/
-  Serial.begin(9600); //Pour le debug
+  Serial.begin(9600);             //Pour le debug
+  pinMode(LED_BUILTIN, OUTPUT);   //
   //***************accelerometre**************//
   /* Setup pour lire les données de l'accelerométre */
   Wire.begin();  
@@ -143,17 +144,22 @@ void loop() {
   if (accZ > 25000 && (millis() - lastchange > 500)) {  
     actif = !actif;                                     
     lastchange = millis();
+    if (actif){  //debug
+      digitalWrite(LED_BUILTIN,HIGH);  
+    }
+    else {
+      digitalWrite(LED_BUILTIN,LOW);
+    }
   }
 
   if (actif){
     kalAngleZ = constrain(kalAngleZ - 180,-120,120);   /* Decale l'angle de 180° (donc on est à 0° quand la main est droite)  et limite l'angle à 120° de chaque coté (arbitraire, on peut agrandir le range si on veut)*/ 
-    //kalAngleZ = constrain(kalAngleZ,0,240);
    /* Recupére les données des flex sensors */
     flex_0 = analogRead(0);
     flex_1 = analogRead(1);
   
-    /*Si au moins un des deux flex sensors sont pliés --> Reglage macro*/ 
-    if ((flex_0 >900) || (flex_1 >1000)){  /*La barre du flex_1 est plus haute que l'autre car c'est celui qui est un peu plié par defaut */ 
+    /*Si au moins un des deux flex sensors est plié --> Reglage macro*/ 
+    if ((flex_0 >960) || (flex_1 >900)){  /*La barre du flex_0 est plus haute que l'autre car c'est celui qui est un peu plié par defaut */ 
       t_macro = map(kalAngleZ,-120,120,t_macro_min,t_macro_max);
       //Serial.print("Mode : macro  ;  ");
       couleur[0]=1; couleur[1]=1; couleur[2]=20;  
@@ -291,7 +297,7 @@ void chenille(int i,int taille){
  *  Fonction de calcul de l'angle, besoin d'un peu plus de detail mais fonctionne 
 */
 void mesure_angle() {
-  uint8_t* data = i2cRead(0x3B, 14); //acquisition des données, demande à l'accelerométre d'envoyer 14 entrées  (a quoi sert le "*" ? )
+  i2cRead(0x3B); //acquisition des données, demande à l'accelerométre d'envoyer 14 entrées 
   accX = ((data[0] << 8) | data[1]);
   accY = ((data[2] << 8) | data[3]);
   accZ = ((data[4] << 8) | data[5]);
@@ -334,17 +340,15 @@ void i2cWrite(uint8_t registerAddress, uint8_t data) {
  *  
  *  Au final, chaque donnée est un entier signé sur 16 bits. 
  * Comme le I²C envoie toujours les données dans le même ordre, on stocke toutes les données dans un tableau et on extrait celles qui nous interressent 
- *   
- * Beaucoup d'infos interressantes sur la lecture des données sur cette page : https://www.i2cdevlib.com/forums/topic/4-understanding-raw-values-of-accelerometer-and-gyrometer/
+ * 
  */
-uint8_t* i2cRead(uint8_t registerAddress, uint8_t nbytes) { //
-  uint8_t data[nbytes];
+void i2cRead(uint8_t registerAddress) { //
+  uint8_t nbytes = 14;
   Wire.beginTransmission(IMUAddress);
   Wire.write(registerAddress);
   Wire.endTransmission(false); // Don't release the bus
   Wire.requestFrom(IMUAddress, nbytes); // Send a repeated start and then release the bus after reading
   for (uint8_t i = 0; i < nbytes; i++)
     data [i] = Wire.read();
-  return data;
 }
 
