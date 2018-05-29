@@ -40,11 +40,11 @@ int16_t gyroZ;
 float accZangle;
 float gyroZrate;
 float gyroZangle = 180;
-uint8_t data[14]; //Stocke les 14 valeurs renvoyées par l'accéléromètre
 long lastchange;
 boolean actif;
 
 /* Variables pour le filtre de Kalman */
+Kalman kalmanX;
 Kalman kalmanZ;
 double kalAngleZ;
 uint32_t timer_acc; /* Entier sur 32 bits non signé --> Valeur entre 0 et 2^32 -1 */
@@ -57,7 +57,7 @@ int flex_1;
 
 //*********variables de delay**********//
 const int timer_connection_test = 1000; // temps d'attente pour chaque test de connection 
-const int time_send_data= 20;
+const int time_send_data= 200;
 //sauvegarde de millis()
 unsigned long timer_send = 0; unsigned long timer_receive = 0; //pour envoyer et recevoir le test de connection
 unsigned long timer_try = 0; //pour essayer de se connecter
@@ -72,21 +72,20 @@ bool is_send=false;
 int erreurs=0;
 //***********************************************//
 
-/*Valeurs pour le mapping */
+/*Valeurs pour le mapping (un peu au pif, j'avoue)*/
 const int t_macro_min = 2000;     // µs 
-const int t_macro_max = 15000;    // µs 
+const int t_macro_max = 10000;    // µs 
 const int t_micro_min = 0;
 const int t_micro_max = 500;   // µs
 /* Variables finales, celles à envoyer par bluetooth */
-int t_macro = 2500;   //µs          
+int t_macro = 1;   //µs          
 int t_micro = 0;   //µs
 
 
 
 void setup() {
   /*de base*/
-  Serial.begin(9600);             //Pour le debug
-  pinMode(LED_BUILTIN, OUTPUT);   //
+  Serial.begin(9600); //Pour le debug
   //***************accelerometre**************//
   /* Setup pour lire les données de l'accelerométre */
   Wire.begin();  
@@ -104,6 +103,7 @@ void setup() {
   pinMode(9, OUTPUT);  // this pin will pull the HC-05 pin 34 (key pin) HIGH to switch module to AT mode
   digitalWrite(9, HIGH); 
   BTSerial.begin(9600);  // HC-05 default speed in AT command more
+  BTSerial.write("AT+BAUD4\r\n");
   //***************************************//
 
 }
@@ -117,22 +117,27 @@ void loop() {
   char receive;         //sauvegarde le char reçus
   if (BTSerial.available()){
     receive=BTSerial.read();
-    if(receive !='$')
+    //if(receive !='$')
       Serial.write(receive); //ecrit le char 
   }
-  test_connection("send",'$',' '); //test si on est connecté
-  test_connection("receive",'$',receive); //test si on est connecté
+  unsigned long currentMillis = millis();
+    if (currentMillis - timer_send_donnee >= time_send_data) {
+        timer_send_donnee = currentMillis;
+        BTSerial.print("&");
+        BTSerial.print(t_micro+t_macro);
+        BTSerial.print("\n");
+        //Serial.print("&");
+        //Serial.print(t_micro+t_macro);
+        //Serial.print("\n");
+    }
+  //test_connection("send",'$',' '); //test si on est connecté
+  //test_connection("receive",'$',receive); //test si on est connecté
   
   if(!is_connected){ //si on est pas connecté
     try_connection(); //on essaye
     chenillard(); //petit chenillard
   }
   else{  //sinon
-    unsigned long currentMillis = millis();
-    if (currentMillis - timer_send_donnee >= time_send_data) {
-        timer_send_donnee = currentMillis;
-        BTSerial.write('&'+t_micro+t_macro+'\n');
-    }
     low_blink(); //on allume tout
   }
 
@@ -144,22 +149,17 @@ void loop() {
   if (accZ > 25000 && (millis() - lastchange > 500)) {  
     actif = !actif;                                     
     lastchange = millis();
-    if (actif){  //debug
-      digitalWrite(LED_BUILTIN,HIGH);  
-    }
-    else {
-      digitalWrite(LED_BUILTIN,LOW);
-    }
+    t_macro=1; t_micro=0;
   }
 
   if (actif){
     kalAngleZ = constrain(kalAngleZ - 180,-120,120);   /* Decale l'angle de 180° (donc on est à 0° quand la main est droite)  et limite l'angle à 120° de chaque coté (arbitraire, on peut agrandir le range si on veut)*/ 
+    //kalAngleZ = constrain(kalAngleZ,0,240);
    /* Recupére les données des flex sensors */
     flex_0 = analogRead(0);
     flex_1 = analogRead(1);
-  
-    /*Si au moins un des deux flex sensors est plié --> Reglage macro*/ 
-    if ((flex_0 >960) || (flex_1 >900)){  /*La barre du flex_0 est plus haute que l'autre car c'est celui qui est un peu plié par defaut */ 
+    /*Si au moins un des deux flex sensors sont pliés --> Reglage macro*/ 
+    if ((flex_0 >960) || (flex_1 >900)){  /*La barre du flex_1 est plus haute que l'autre car c'est celui qui est un peu plié par defaut */ 
       t_macro = map(kalAngleZ,-120,120,t_macro_min,t_macro_max);
       //Serial.print("Mode : macro  ;  ");
       couleur[0]=1; couleur[1]=1; couleur[2]=20;  
@@ -196,6 +196,7 @@ void try_connection(){
     BTSerial.write("AT+INQ\r\n");
     //delay(5000);
     BTSerial.write("AT+CONN1\r\n");
+    //BTSerial.write('$');
   }
 }
 
@@ -207,7 +208,7 @@ void test_connection(String mode, char test, char receive){
       if (currentMillis - timer_send >= timer_connection_test) {
     timer_send = currentMillis;
     timer_receive=currentMillis;
-      BTSerial.write(test+'\n');
+      BTSerial.write(test);
       is_send=true;
       }
     } 
@@ -297,7 +298,8 @@ void chenille(int i,int taille){
  *  Fonction de calcul de l'angle, besoin d'un peu plus de detail mais fonctionne 
 */
 void mesure_angle() {
-  i2cRead(0x3B); //acquisition des données, demande à l'accelerométre d'envoyer 14 entrées 
+  unsigned long currentMillis = millis();
+  uint8_t* data = i2cRead(0x3B, 14); //acquisition des données, demande à l'accelerométre d'envoyer 14 entrées  (a quoi sert le "*" ? )
   accX = ((data[0] << 8) | data[1]);
   accY = ((data[2] << 8) | data[3]);
   accZ = ((data[4] << 8) | data[5]);
@@ -306,9 +308,9 @@ void mesure_angle() {
   //Calcul de l'angle avec la valeur de g sur z , la vitesse angulaire de z, et le filtre de Kalman
   accZangle = (atan2(accX, accY) + PI) * RAD_TO_DEG;
   gyroZrate = -((double)gyroZ / 131.0);
-  gyroZangle += kalmanZ.getRate() * ((double)(micros() - timer_acc) / 1000000); // Calculate gyro angle using the unbiased rate
-  kalAngleZ = kalmanZ.getAngle(accZangle, gyroZrate, (double)(micros() - timer_acc) / 1000000); // Calculate the angle using a Kalman filter
-  timer_acc = micros();
+  gyroZangle += kalmanZ.getRate() * ((double)(currentMillis - timer_acc) / 1000000); // Calculate gyro angle using the unbiased rate
+  kalAngleZ = kalmanZ.getAngle(accZangle, gyroZrate, (double)(currentMillis - timer_acc) / 1000000); // Calculate the angle using a Kalman filter
+  timer_acc = currentMillis;
 }
 
 
@@ -340,15 +342,17 @@ void i2cWrite(uint8_t registerAddress, uint8_t data) {
  *  
  *  Au final, chaque donnée est un entier signé sur 16 bits. 
  * Comme le I²C envoie toujours les données dans le même ordre, on stocke toutes les données dans un tableau et on extrait celles qui nous interressent 
- * 
+ *   
+ * Beaucoup d'infos interressantes sur la lecture des données sur cette page : https://www.i2cdevlib.com/forums/topic/4-understanding-raw-values-of-accelerometer-and-gyrometer/
  */
-void i2cRead(uint8_t registerAddress) { //
-  uint8_t nbytes = 14;
+uint8_t* i2cRead(uint8_t registerAddress, uint8_t nbytes) { //
+  uint8_t data[nbytes];
   Wire.beginTransmission(IMUAddress);
   Wire.write(registerAddress);
   Wire.endTransmission(false); // Don't release the bus
   Wire.requestFrom(IMUAddress, nbytes); // Send a repeated start and then release the bus after reading
   for (uint8_t i = 0; i < nbytes; i++)
     data [i] = Wire.read();
+  return data;
 }
 

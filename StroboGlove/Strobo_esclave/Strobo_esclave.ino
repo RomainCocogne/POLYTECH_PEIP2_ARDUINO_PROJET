@@ -6,22 +6,23 @@
  */
 
 #include <SoftwareSerial.h>
-SoftwareSerial BTSerial(10, 11); 
+SoftwareSerial BTSerial(11, 10); 
 
 String message="";          //frequence de clignotement en String
-int dureeSombre=500;        //frequence de clignotement en int (500 par defaut)
+int dureeSombre=1;        //frequence de clignotement en int (500 par defaut)
 const int dureeFlash = 200; // Durée du flash en µs 
-const int led_pin = 2;      //pin de la led
+const int led_pin = 13;      //pin de la led
 bool receiving_data=false;  //recoit ou non la frequence de clignotement
 //sauvegarde de millis()
-unsigned long timer_flash = 0; unsigned long timer_shut = 0; //timer pour l allumage de la led
-bool allumee=true;          //si la led est allumee
+unsigned long timer_blink = 0; //timer pour l allumage de la led
+bool led_state=LOW;          //si la led est allumee
 
 void setup() 
 {
   Serial.begin(9600);    //debug
   BTSerial.begin(9600);  //communication bluetooth
-  
+  BTSerial.write("AT+BAUD4\r\n");
+  pinMode(led_pin,OUTPUT);
   pinMode(9, OUTPUT);  // this pin will pull the HC-05 pin 34 (key pin) HIGH to switch module to AT mode
   digitalWrite(9, HIGH);   
 }
@@ -54,18 +55,20 @@ void loop()
 
   //**************LED**************//
    unsigned long currentMillis = micros();
-  if (currentMillis - timer_flash >= dureeFlash && allumee) {   //duree allumee
-      timer_flash = currentMillis; timer_shut = currentMillis;
-      allumee=false;
-      digitalWrite(led_pin, LOW);                               //eteindre
+   if((led_state == HIGH) && (currentMillis - timer_blink >= dureeFlash))
+  {
+    led_state = LOW;  // Turn it off
+    timer_blink = currentMillis;  // Remember the time
+    digitalWrite(led_pin, led_state);  // Update the actual LED
   }
-  else if (currentMillis - timer_shut >= dureeSombre && !allumee) { //duree eteinte
-      timer_shut = currentMillis; timer_flash = currentMillis;
-      allumee=true;
-      digitalWrite(led_pin, LOW);                               //allumer
+  else if ((led_state == LOW) && (currentMillis - timer_blink >= dureeSombre))
+  {
+    led_state = HIGH;  // turn it on
+    timer_blink = currentMillis;   // Remember the time
+    if(dureeSombre!=1)
+      digitalWrite(led_pin, led_state);   // Update the actual LED
   }
   //Serial.print("Freq : ");Serial.print(1/((dureeSombre)*0.000001));Serial.println(" Hz");
-
 }
 
 
