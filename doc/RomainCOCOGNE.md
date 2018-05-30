@@ -44,7 +44,8 @@ Nous avons presenté notre avancement dans une presentation de mi-parcours. J'ai
 Quentin a fini de travailler sur l'accéléromètre. Je n'arrive toujours pas a faire fonctionner le bluetooth. On a aussi travaillé sur les flex sensors.
 
 ## Séance du 9 Avril
-On a commandé de nouveaux composants. j'ai soudé le circuit de la main droite sur PCB. 
+On a commandé de nouveaux composants. j'ai soudé le circuit de la main droite sur PCB.
+On a travaillé sur des objets ludiques pour la démo.
 
 ## Séance du 2 Mai
 J'ai demandé à Mr Ferrero de l'aide pour le bluetooth. Il m'a donné d'autres modules. Des HM-10. Ceux-ci ont l'air de marché, même si on s'est rendu compte qu'il s'agissait de contrefaçon. Je vais travailler avec ça maintenant.
