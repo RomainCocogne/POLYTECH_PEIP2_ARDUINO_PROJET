@@ -5,8 +5,8 @@
  * 
  */
 
-#include <SoftwareSerial.h>
-SoftwareSerial BTSerial(11, 10); 
+#include <AltSoftSerial.h>
+AltSoftSerial BTSerial; 
 
 String message="";          //frequence de clignotement en String
 int dureeSombre=1;        //frequence de clignotement en int (500 par defaut)
@@ -22,9 +22,7 @@ void setup()
   Serial.begin(9600);    //debug
   BTSerial.begin(9600);  //communication bluetooth
   BTSerial.write("AT+BAUD4\r\n");
-  pinMode(led_pin,OUTPUT);
-  pinMode(9, OUTPUT);  // this pin will pull the HC-05 pin 34 (key pin) HIGH to switch module to AT mode
-  digitalWrite(9, HIGH);   
+  pinMode(led_pin,OUTPUT);   
 }
 
 void loop()
@@ -35,7 +33,7 @@ void loop()
     receive=BTSerial.read();
     //Serial.write(receive);
     if(receive=='$')
-      BTSerial.write("$");   //test de connection
+      BTSerial.print("$");   //test de connection
     else{
       if(receive != '\r' && receive !='\n'){ //si on n'est pas en fin de ligne
         if(receiving_data)                   //si on doit enregistrer les donnee
@@ -54,21 +52,14 @@ void loop()
   }
 
   //**************LED**************//
-   unsigned long currentMillis = micros();
-   if((led_state == HIGH) && (currentMillis - timer_blink >= dureeFlash))
-  {
-    led_state = LOW;  // Turn it off
-    timer_blink = currentMillis;  // Remember the time
-    digitalWrite(led_pin, led_state);  // Update the actual LED
-  }
-  else if ((led_state == LOW) && (currentMillis - timer_blink >= dureeSombre))
-  {
-    led_state = HIGH;  // turn it on
-    timer_blink = currentMillis;   // Remember the time
-    if(dureeSombre!=1)
+  led_state = HIGH;  // turn it on
+  if(dureeSombre!=1)
       digitalWrite(led_pin, led_state);   // Update the actual LED
-  }
-  //Serial.print("Freq : ");Serial.print(1/((dureeSombre)*0.000001));Serial.println(" Hz");
+  delayMicroseconds(dureeFlash);
+    led_state = LOW;  // Turn it off
+    digitalWrite(led_pin, led_state);  // Update the actual LED
+    delayMicroseconds(dureeSombre);
+
 }
 
 

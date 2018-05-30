@@ -5,11 +5,11 @@
  * et l envoie par bluetooth
  */
 
-
+#include <avr/pgmspace.h>
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
-#define PIN            5 
-#define NUMPIXELS      18
+const PROGMEM int PIN = 5;
+const PROGMEM int NUMPIXELS = 18;
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 #include <SoftwareSerial.h>
@@ -30,7 +30,7 @@ int couleur[]={1,20,1}; //pour du vert
 
 //*******variables accelerometre*******//
 /* Adresse du I²C */
-uint8_t IMUAddress = 0x68;   //Ox annonce un nombre en hexa
+const PROGMEM uint8_t IMUAddress = 0x68;   //Ox annonce un nombre en hexa
 
 /* Variables pour l'accelerométre */ 
 int16_t accX; /*Entiers sur 16 bit signés --> Valeurs entre -32768 et +32767 */  
@@ -40,8 +40,11 @@ int16_t gyroZ;
 float accZangle;
 float gyroZrate;
 float gyroZangle = 180;
+uint8_t data[14]; //Stocke les 14 valeurs renvoyées par l'accéléromètre
 long lastchange;
 boolean actif;
+boolean changing_mode;
+double last_angle = 0;
 
 /* Variables pour le filtre de Kalman */
 Kalman kalmanX;
@@ -56,8 +59,8 @@ int flex_1;
 //*******************************************//
 
 //*********variables de delay**********//
-const int timer_connection_test = 1000; // temps d'attente pour chaque test de connection 
-const int time_send_data= 200;
+const PROGMEM int timer_connection_test = 1000; // temps d'attente pour chaque test de connection 
+const PROGMEM int time_send_data= 200;
 //sauvegarde de millis()
 unsigned long timer_send = 0; unsigned long timer_receive = 0; //pour envoyer et recevoir le test de connection
 unsigned long timer_try = 0; //pour essayer de se connecter
@@ -73,10 +76,10 @@ int erreurs=0;
 //***********************************************//
 
 /*Valeurs pour le mapping (un peu au pif, j'avoue)*/
-const int t_macro_min = 2000;     // µs 
-const int t_macro_max = 10000;    // µs 
-const int t_micro_min = 0;
-const int t_micro_max = 500;   // µs
+const PROGMEM int t_macro_min = 11000;     // µs 
+const PROGMEM int t_macro_max = 13000;    // µs 
+const PROGMEM int t_micro_min = 0;
+const PROGMEM int t_micro_max = 500;   // µs
 /* Variables finales, celles à envoyer par bluetooth */
 int t_macro = 1;   //µs          
 int t_micro = 0;   //µs
@@ -85,7 +88,7 @@ int t_micro = 0;   //µs
 
 void setup() {
   /*de base*/
-  Serial.begin(9600); //Pour le debug
+  //Serial.begin(9600); //Pour le debug
   //***************accelerometre**************//
   /* Setup pour lire les données de l'accelerométre */
   Wire.begin();  
@@ -100,8 +103,6 @@ void setup() {
   //***************************************//
 
   //*********bluetooth*********************//
-  pinMode(9, OUTPUT);  // this pin will pull the HC-05 pin 34 (key pin) HIGH to switch module to AT mode
-  digitalWrite(9, HIGH); 
   BTSerial.begin(9600);  // HC-05 default speed in AT command more
   BTSerial.write("AT+BAUD4\r\n");
   //***************************************//
@@ -110,7 +111,7 @@ void setup() {
 
 void loop() {
 
-  //Serial.println(kalAngleZ);
+  //Serial.println(F(kalAngleZ));
 
   //******************bluetooth+led**********************//
   
@@ -118,20 +119,19 @@ void loop() {
   if (BTSerial.available()){
     receive=BTSerial.read();
     //if(receive !='$')
-      Serial.write(receive); //ecrit le char 
+     // Serial.print(receive); //ecrit le char 
   }
   unsigned long currentMillis = millis();
     if (currentMillis - timer_send_donnee >= time_send_data) {
         timer_send_donnee = currentMillis;
-        BTSerial.print("&");
-        BTSerial.print(t_micro+t_macro);
-        BTSerial.print("\n");
-        //Serial.print("&");
-        //Serial.print(t_micro+t_macro);
-        //Serial.print("\n");
+        if(t_micro+t_macro !=0){
+          BTSerial.print("&");
+          BTSerial.print(t_micro+t_macro);
+          BTSerial.print("\n");
+        }
     }
-  //test_connection("send",'$',' '); //test si on est connecté
-  //test_connection("receive",'$',receive); //test si on est connecté
+  test_connection("send",'$',' '); //test si on est connecté
+  test_connection("receive",'$',receive); //test si on est connecté
   
   if(!is_connected){ //si on est pas connecté
     try_connection(); //on essaye
@@ -154,21 +154,21 @@ void loop() {
 
   if (actif){
     kalAngleZ = constrain(kalAngleZ - 180,-120,120);   /* Decale l'angle de 180° (donc on est à 0° quand la main est droite)  et limite l'angle à 120° de chaque coté (arbitraire, on peut agrandir le range si on veut)*/ 
-    //kalAngleZ = constrain(kalAngleZ,0,240);
    /* Recupére les données des flex sensors */
     flex_0 = analogRead(0);
     flex_1 = analogRead(1);
     /*Si au moins un des deux flex sensors sont pliés --> Reglage macro*/ 
     if ((flex_0 >960) || (flex_1 >900)){  /*La barre du flex_1 est plus haute que l'autre car c'est celui qui est un peu plié par defaut */ 
-      t_macro = map(kalAngleZ,-120,120,t_macro_min,t_macro_max);
-      //Serial.print("Mode : macro  ;  ");
+      t_macro = map(kalAngleZ-last_angle , -120+last_angle , 120+last_angle ,t_macro_min,t_macro_max);
+      //Serial.print(F("Mode : macro  ;  "));
       couleur[0]=1; couleur[1]=1; couleur[2]=20;  
     }
     
     /* Sinon --> Reglage micro */
     else {
       t_micro = map(kalAngleZ,-120,120,t_micro_min,t_micro_max);
-      //Serial.print("Mode : micro  ;  "); 
+      last_angle = kalAngleZ;
+      //Serial.print(F("Mode : micro  ;  ")); 
       couleur[0]=1; couleur[1]=20; couleur[2]=1;     
       }
       
@@ -298,8 +298,8 @@ void chenille(int i,int taille){
  *  Fonction de calcul de l'angle, besoin d'un peu plus de detail mais fonctionne 
 */
 void mesure_angle() {
-  unsigned long currentMillis = millis();
-  uint8_t* data = i2cRead(0x3B, 14); //acquisition des données, demande à l'accelerométre d'envoyer 14 entrées  (a quoi sert le "*" ? )
+  unsigned long currentMicros = micros();
+  i2cRead(0x3B); //acquisition des données, demande à l'accelerométre d'envoyer 14 entrées  (a quoi sert le "*" ? )
   accX = ((data[0] << 8) | data[1]);
   accY = ((data[2] << 8) | data[3]);
   accZ = ((data[4] << 8) | data[5]);
@@ -308,9 +308,9 @@ void mesure_angle() {
   //Calcul de l'angle avec la valeur de g sur z , la vitesse angulaire de z, et le filtre de Kalman
   accZangle = (atan2(accX, accY) + PI) * RAD_TO_DEG;
   gyroZrate = -((double)gyroZ / 131.0);
-  gyroZangle += kalmanZ.getRate() * ((double)(currentMillis - timer_acc) / 1000000); // Calculate gyro angle using the unbiased rate
-  kalAngleZ = kalmanZ.getAngle(accZangle, gyroZrate, (double)(currentMillis - timer_acc) / 1000000); // Calculate the angle using a Kalman filter
-  timer_acc = currentMillis;
+  gyroZangle += kalmanZ.getRate() * ((double)(currentMicros - timer_acc) / 1000000); // Calculate gyro angle using the unbiased rate
+  kalAngleZ = kalmanZ.getAngle(accZangle, gyroZrate, (double)(currentMicros - timer_acc) / 1000000); // Calculate the angle using a Kalman filter
+  timer_acc = currentMicros;
 }
 
 
@@ -345,14 +345,14 @@ void i2cWrite(uint8_t registerAddress, uint8_t data) {
  *   
  * Beaucoup d'infos interressantes sur la lecture des données sur cette page : https://www.i2cdevlib.com/forums/topic/4-understanding-raw-values-of-accelerometer-and-gyrometer/
  */
-uint8_t* i2cRead(uint8_t registerAddress, uint8_t nbytes) { //
-  uint8_t data[nbytes];
+void i2cRead(uint8_t registerAddress) { //
+  uint8_t nbytes = 14;
   Wire.beginTransmission(IMUAddress);
   Wire.write(registerAddress);
   Wire.endTransmission(false); // Don't release the bus
   Wire.requestFrom(IMUAddress, nbytes); // Send a repeated start and then release the bus after reading
   for (uint8_t i = 0; i < nbytes; i++)
     data [i] = Wire.read();
-  return data;
+
 }
 
