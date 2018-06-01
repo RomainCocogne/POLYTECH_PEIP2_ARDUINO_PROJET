@@ -49,4 +49,4 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 ### Objet en rotation	
 . Moteur continu ou pas à pas	Non payé
 . Horloge	Non payé
-### TOTAL	45.93
+### TOTAL	45.93 €
