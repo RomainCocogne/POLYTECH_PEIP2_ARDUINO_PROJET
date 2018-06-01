@@ -27,35 +27,26 @@ voici un exemple de rendu:
 Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des flashs lumineux et l'autre se chargera du contrôle.
 
 ## Liste du matériel
-
-### Structure : 
-
-* Gant
-* Pâte thermique 
-* Lentilles optiques, voir les caractéristiques sur la page instructables. Angle de diffusion 60° 
-* Plaque de cuivre
-	
-### Electronique : 
-
-* 2 Arduino (Nano/Mini Pro)
-* Accelerométre 
-* Potentiométre 
-* Resistances 100 et 10k
-* MOSFET 
-* Flex Sensors 
-* LED blanche 100W
-	
-### Alimentation : 
-
-* Batterie lipo 11,1V - 12V   +3A 1500 mAh   
-* 2éme (batterie moins puissante)  
-* Convertisseur Boost DCDC   (12V compris dans l'input, 34V compris dans l'output)
-	
-### Transfert de données : Bluetooth   
-
-### Objet en rotation
-
-* moteur continu ou pas à pas
-* objet ludique
-* Horloge
-* Toupie
+### Structure 	
+Gants	Non payé
+Brassard	4.90
+Pâte thermique	5.24
+Lentilles optiques	2.82
+Plaque de cuivre	Non payé
+### Electronique 	
+2 Arduino (Nano/Mini Pro)	2x4.39
+Accéléromètre	Non payé
+Résistances 100 et 10k	Non payé
+MOSFET	0.93
+Flex Sensors	2x6.82
+LED blanche 100W	6.83
+### Alimentation 	
+Batterie 11,1V - 12V +3A 1500 mAh	Non payé
+Batterie 8V	Non payé
+Convertisseur Boost DCDC (12V to 34V)	2.79
+### Transfert de données :	
+Bluetooth HM-10	Non payé
+### Objet en rotation	
+Moteur continu ou pas à pas	Non payé
+Horloge	Non payé
+### TOTAL	45.93
