@@ -42,3 +42,10 @@ Tests avec les flex sensors et les modules bluetooth. Finition du code pour l'ac
 
 * ### Séance du 9 Avril 2018
 Peaufinage du code comprenenant l'accelerométre, les flex sensors, et la LED. Debut d'un prototype avec le montage sur pcb du circuit de droite. Deuxiéme commande de composants.  
+
+* ### Séance du 9 Mai 
+Changment de matériel Bluetooth : On remplace les HC-05 par des HM-10 qui fonctionnement mieux 
+Les codes des deux gants sont prets, il ne reste plus qu'a attendre les arduinos nano commandées et tout assembler.
+
+* ### Du 21 au 31 Mai 
+Assemblage et correction de quelques problémes de timing au niveau de libraries Arduino. Tournage de la vidéo de présentation.
