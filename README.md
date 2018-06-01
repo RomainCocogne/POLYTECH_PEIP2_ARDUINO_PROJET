@@ -26,7 +26,11 @@ Voici un rendu du produit final:
 
 
 
-### <a href="http://www.youtube.com/watch?feature=player_embedded&v=jR2pRvadDSw " target="_blank"><img src="http://img.youtube.com/vi/jR2pRvadDSw/0.jpg" alt="Vidéo de démonstration du stroboglove" width="240" height="180" border="10" /></a>
+
+## <a href="http://www.youtube.com/watch?feature=player_embedded&v=jR2pRvadDSw " target="_blank"><img src="http://img.youtube.com/vi/jR2pRvadDSw/0.jpg" alt="Vidéo de démonstration du stroboglove" width="240" height="180" border="10" /></a>
+
+
+
 
 
 Nous utilisons deux gants en communication bluetooth; l'un se charge des flashs lumineux et l'autre se charge du contrôle de la fréquence.
