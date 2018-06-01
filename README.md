@@ -25,8 +25,11 @@ Voici un rendu du produit final:
 ![time control glove](https://i.makeagif.com/media/6-01-2018/QaOAMd.gif)
 
 
+### Vidéo de démonstration
 
-### ![Vidéo de démonstration](https://www.youtube.com/watch?v=jR2pRvadDSw)
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=jR2pRvadDSw
+" target="_blank"><img src="http://img.youtube.com/vi/jR2pRvadDSw/0.jpg" 
+alt="Démonstration du stroboglove" width="240" height="180" border="10" /></a>
 
 
 Nous utilisons deux gants en communication bluetooth; l'un se charge des flashs lumineux et l'autre se charge du contrôle de la fréquence.
