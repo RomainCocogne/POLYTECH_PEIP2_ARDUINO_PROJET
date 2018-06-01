@@ -25,7 +25,7 @@ Voici un rendu du produit final:
 ![time control glove](https://i.makeagif.com/media/6-01-2018/QaOAMd.gif)
 
 
-![Vidéo de démonstration](https://www.youtube.com/watch?v=jR2pRvadDSw)
+####![Vidéo de démonstration](https://www.youtube.com/watch?v=jR2pRvadDSw)
 
 Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des flashs lumineux et l'autre se chargera du contrôle.
 
