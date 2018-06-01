@@ -28,25 +28,25 @@ Nous allons utiliser deux gants en communication bluetooth; l'un se chargera des
 
 ## Liste du matériel
 ### Structure 	
-Gants	Non payé
-Brassard	4.90
-Pâte thermique	5.24
-Lentilles optiques	2.82
-Plaque de cuivre	Non payé
+. Gants	Non payé
+. Brassard	4.90
+. Pâte thermique	5.24
+. Lentilles optiques	2.82
+. Plaque de cuivre	Non payé
 ### Electronique 	
-2 Arduino (Nano/Mini Pro)	2x4.39
-Accéléromètre	Non payé
-Résistances 100 et 10k	Non payé
-MOSFET	0.93
-Flex Sensors	2x6.82
-LED blanche 100W	6.83
+. 2 Arduino (Nano/Mini Pro)	2x4.39
+. Accéléromètre	Non payé
+. Résistances 100 et 10k	Non payé
+. MOSFET	0.93
+. Flex Sensors	2x6.82
+. LED blanche 100W	6.83
 ### Alimentation 	
-Batterie 11,1V - 12V +3A 1500 mAh	Non payé
-Batterie 8V	Non payé
-Convertisseur Boost DCDC (12V to 34V)	2.79
+. Batterie 11,1V - 12V +3A 1500 mAh	Non payé
+. Batterie 8V	Non payé
+. Convertisseur Boost DCDC (12V to 34V)	2.79
 ### Transfert de données :	
-Bluetooth HM-10	Non payé
+. Bluetooth HM-10	Non payé
 ### Objet en rotation	
-Moteur continu ou pas à pas	Non payé
-Horloge	Non payé
+. Moteur continu ou pas à pas	Non payé
+. Horloge	Non payé
 ### TOTAL	45.93
